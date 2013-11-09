@@ -8,6 +8,7 @@ exports.index = function(req, res){
 };
 
 var list = [];
+var TIME_STAMP_DIFF = 20000;
 
 // Handle receiving a new handshake's info.
 exports.receiveTimeStamp = function(req, res){
@@ -24,12 +25,11 @@ exports.receiveTimeStamp = function(req, res){
 
 // Handle request for matching hand-shakes.
 exports.match = function(req, res){
-	console.log("In match");
 	if (req.query.userId && req.query.timeStamp) {
 		var userId = req.query.userId;
 		var currentTime = req.query.timeStamp;
 		for (i = list.length - 1; i >= 0; i--) {
-			if (currentTime - list[i].timeStamp > 20000) {
+			if (currentTime - list[i].timeStamp > TIME_STAMP_DIFF) {
 				res.send({ message : 'not_found'});
 				return;
 			}
