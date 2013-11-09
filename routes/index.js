@@ -12,11 +12,22 @@ exports.index = function(req, res){
 
 var list = [];
 var TIME_STAMP_DIFF = 20000;
+var TIME_DIFF = 4000;
 
 // Handle receiving a new handshake's info.
 exports.receiveTimeStamp = function(req, res){
-	if (req.query.userId && req.query.timeStamp && req.query.userInfo) {
-  		list.push({ userId : req.query.userId, 
+	if (req.query.username && req.query.timeStamp) {
+		var username = req.query.username;
+		var timeStamp = req.query.timeStamp;
+		// Check if there are multiple requests.
+		for (var i = list.length - 1; i >= 0; i--)
+			if (list[i].username == username && timeStamp - list[i].timeStamp < TIME_DIFF) {
+				res.send({message : 'failure'});
+				return;
+			}
+
+		// If there is no multiple request.
+  		list.push({ username : req.query.username, 
   						  timeStamp : req.query.timeStamp,
   						  userInfo : req.query.userInfo });
   		res.send({message : 'success'});
@@ -29,8 +40,8 @@ exports.receiveTimeStamp = function(req, res){
 
 // Handle request for matching hand-shakes.
 exports.match = function(req, res){
-	if (req.query.userId && req.query.timeStamp) {
-		var userId = req.query.userId;
+	if (req.query.username && req.query.timeStamp) {
+		var username = req.query.username;
 		var currentTime = req.query.timeStamp;
 		for (i = list.length - 1; i >= 0; i--) {
 			if (currentTime - list[i].timeStamp > TIME_STAMP_DIFF) {
@@ -38,10 +49,11 @@ exports.match = function(req, res){
 				return;
 			}
 
-			if (list[i].userId != userId) {
-				contactBook[userId].push({ userId : list[i].userId,
+			if (list[i].username != username) {
+				contactBook[username].push({ username : list[i].username,
 				                           userInfo : list[i].userInfo});
 				res.send({ message : 'success',
+					       username : list[i].username,
 						   userInfo : list[i].userInfo});
 				return;
 			}
@@ -97,7 +109,7 @@ exports.login = function(req, res) {
   		for (var i = 0; i < users.length; i++) 
   			if (users[i].username == username && users[i].password == password) {
   				res.send({ message : 'success',
-  						       user : users[i], 
+  						   user : users[i], 
                      contacts : contactBook[username]});
   				return;
   			}
