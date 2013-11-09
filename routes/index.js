@@ -16,6 +16,7 @@ exports.receiveTimeStamp = function(req, res){
   		list.push({ userId : req.query.userId, 
   						  timeStamp : req.query.timeStamp,
   						  userInfo : req.query.userInfo });
+  		// Remove the list later.
   		res.send({message : 'success', list : list});
   	}
   	else {

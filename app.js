@@ -33,6 +33,7 @@ app.get('/', routes.index);
 app.get('/send-time', routes.receiveTimeStamp);
 app.get('/match', routes.match);
 app.get('/users', user.list);
+app.get('/sign-up', user.signUp);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
