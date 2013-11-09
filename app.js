@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var cloudinary = require('cloudinary');
 
 var app = express();
 
@@ -32,9 +33,11 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/send-time', routes.receiveTimeStamp);
 app.get('/match', routes.match);
-app.get('/users', user.list);
-app.get('/sign-up', user.signUp);
-app.get('/login', user.login);
+app.get('/users', routes.list);
+app.get('/sign-up', routes.signUp);
+app.get('/login', routes.login);
+app.get('/testImage', routes.testImage);
+app.get('/list', routes.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

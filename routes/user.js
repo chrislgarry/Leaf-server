@@ -4,9 +4,16 @@
  */
 users = [];
 exports.users;
+var contactBook = {};
+exports.contactBook;
 
 exports.list = function(req, res){
-  res.send("respond with a resource");
+  if (req.query.username) {
+    var username = req.query.username;
+    res.send({ message : 'success', contact : contactBook[username]});
+    return;
+  }
+  res.send({ message : 'failure'});
 };
 
 // Sign up a new user.
@@ -22,6 +29,7 @@ exports.signUp = function(req, res){
   	users.push({ username : username,
   				 password : password,
   				 userInfo : req.query.userInfo});
+    contactBook[username] = [users[users.length - 1]];
   	console.log(users);
   	res.send({ message : 'success'});
   	return;
@@ -39,7 +47,8 @@ exports.login = function(req, res) {
   		for (var i = 0; i < users.length; i++) 
   			if (users[i].username == username && users[i].password == password) {
   				res.send({ message : 'success',
-  						   user : users[i]});
+  						       user : users[i], 
+                     contacts : contactBook[username]});
   				return;
   			}
   		res.send({ message : 'not_found'});
