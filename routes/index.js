@@ -12,7 +12,8 @@ exports.index = function(req, res){
 
 var list = [];
 var TIME_STAMP_DIFF = 20000;
-var TIME_DIFF = 4000;
+var TIME_DIFF = 6000;
+var userInfoMap = {};
 
 // Handle receiving a new handshake's info.
 exports.receiveTimeStamp = function(req, res){
@@ -50,10 +51,10 @@ exports.match = function(req, res){
 
 			if (list[i].username != username) {
 				contactBook[username].push({ username : list[i].username,
-				                           userInfo : list[i].userInfo});
+				                           userInfo : userInfoMap[list[i].username]});
 				res.send({ message : 'success',
 					       username : list[i].username,
-						   userInfo : list[i].userInfo});
+						   userInfo : userInfoMap[list[i].username]});
 				return;
 			}
 		}
@@ -90,6 +91,7 @@ exports.signUp = function(req, res){
   	users.push({ username : username,
   				 password : password,
   				 userInfo : req.query.userInfo});
+  	userInfoMap[username] = req.query.userInfo;
     contactBook[username] = [users[users.length - 1]];
   	console.log(users);
   	res.send({ message : 'success'});
