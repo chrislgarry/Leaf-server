@@ -31,7 +31,6 @@ exports.receiveTimeStamp = function(req, res){
   						  timeStamp : req.query.timeStamp,
   						  userInfo : req.query.userInfo });
   		res.send({message : 'success'});
-  		console.log(list);
   	}
   	else {
   		res.send({message : 'failure'});
