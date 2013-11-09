@@ -85,7 +85,7 @@ exports.signUp = function(req, res){
   	var password = req.query.password;
 
   	if (exist(username)) {
-  		res.send({ message : "username_exist"});
+  		res.redirect('/login?username=' + username + '&password=' + password);
   		return;
   	}
   	users.push({ username : username,
