@@ -30,6 +30,25 @@ exports.signUp = function(req, res){
   res.send({ message : 'improper_username_or_password'});
 };
 
+// Login user.
+exports.login = function(req, res) {
+	if (req.query.username && req.query.password) {
+		var username = req.query.username;
+  		var password = req.query.password;
+
+  		for (var i = 0; i < users.length; i++) 
+  			if (users[i].username == username && users[i].password == password) {
+  				res.send({ message : 'success',
+  						   user : users[i]});
+  				return;
+  			}
+  		res.send({ message : 'not_found'});
+  		return;
+	}
+
+	res.send({ message : 'failure'});
+}
+
 // Determine if there such an username exist in the database.
 exist = function(username) {
 	for (var i = 0; i < users.length; i++) {
