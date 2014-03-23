@@ -133,7 +133,7 @@ exist = function(username) {
 }
 
 
-// Determine if two handshakes match.
+// Helper function to match(): returns true if two handshakes match.
 is_match = function(handshake_one, handshake_two) {
 	
 	match = false;
@@ -147,6 +147,26 @@ is_match = function(handshake_one, handshake_two) {
 
 	return match;
 }
+
+// Find a matching handshake.
+exports.match = function(req, res) {
+
+	if (req.query.handshake) {
+
+		var query_handshake = req.query.handshake;
+		
+		/*
+		for each handshake in database
+			is_match(query_handshake, db_handshake)
+		*/
+
+  		res.send({ message : 'match_not_found'});
+  		return;
+	}
+
+	res.send({ message : 'matching failure'});
+}
+
 
 // A test image from cloudinary.
 exports.testImage = function(req, res){
