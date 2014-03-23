@@ -37,35 +37,35 @@ exports.receiveTimeStamp = function(req, res){
   	}
 };
 
-// Handle request for matching hand-shakes.
-exports.match = function(req, res){
-	if (req.query.username && req.query.timeStamp) {
-		var username = req.query.username;
-		var currentTime = req.query.timeStamp;
-		for (i = list.length - 1; i >= 0; i--) {
-			if (currentTime - list[i].timeStamp > TIME_STAMP_DIFF) {
-				res.send({ message : 'not_found'});
-				return;
-			}
+// // Handle request for matching hand-shakes.
+// exports.match = function(req, res){
+// 	if (req.query.username && req.query.timeStamp) {
+// 		var username = req.query.username;
+// 		var currentTime = req.query.timeStamp;
+// 		for (i = list.length - 1; i >= 0; i--) {
+// 			if (currentTime - list[i].timeStamp > TIME_STAMP_DIFF) {
+// 				res.send({ message : 'not_found'});
+// 				return;
+// 			}
 
-			if (list[i].username != username) {
-				contactBook[username].push({ username : list[i].username,
-				                           userInfo : userInfoMap[list[i].username]});
-				res.send({ message : 'success',
-					       username : list[i].username,
-						   userInfo : userInfoMap[list[i].username]});
-				return;
-			}
-		}
+// 			if (list[i].username != username) {
+// 				contactBook[username].push({ username : list[i].username,
+// 				                           userInfo : userInfoMap[list[i].username]});
+// 				res.send({ message : 'success',
+// 					       username : list[i].username,
+// 						   userInfo : userInfoMap[list[i].username]});
+// 				return;
+// 			}
+// 		}
 
-		res.send({ message : 'not_found'});
-		return;
-	}
-	else {
-		res.send({ message : 'failure'});
-		return;
-	}
-};
+// 		res.send({ message : 'not_found'});
+// 		return;
+// 	}
+// 	else {
+// 		res.send({ message : 'failure'});
+// 		return;
+// 	}
+// };
 
 
 exports.list = function(req, res){
