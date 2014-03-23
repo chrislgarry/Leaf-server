@@ -132,6 +132,22 @@ exist = function(username) {
 	return false;
 }
 
+
+// Determine if two handshakes match.
+is_match = function(handshake_one, handshake_two) {
+	
+	match = false;
+	
+	/*Pseudocode
+		output_array = cross_correlate(handshake_one,handshake_two);
+		if(output_array contains a global maximum (a peak) above a certain threshold){
+			match = true;
+		}
+	*/
+
+	return match;
+}
+
 // A test image from cloudinary.
 exports.testImage = function(req, res){
 	res.render('test_image', { cloudinary : cloudinary});
