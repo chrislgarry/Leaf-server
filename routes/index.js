@@ -1,4 +1,3 @@
-
 /*
  * GET home page.
  */
@@ -157,7 +156,10 @@ exports.match = function(req, res) {
 		
 		/*
 		for each handshake in database
-			is_match(query_handshake, db_handshake)
+			if(is_match(query_handshake, db_handshake)){
+				res.send({ message : 'success', matched_user : username for db_handshake});
+	   			return;
+			}
 		*/
 
   		res.send({ message : 'match_not_found'});
